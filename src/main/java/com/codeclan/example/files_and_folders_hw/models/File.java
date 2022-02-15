@@ -1,8 +1,9 @@
 package com.codeclan.example.files_and_folders_hw.models;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "files")
 public class File {
 
     @Id
@@ -20,6 +21,7 @@ public class File {
     private double size;
 
     @ManyToOne
+    @JsonIgnoreProperties({"files"})
     @JoinColumn(name = "folder_id", nullable = false)
     // A File should have a folder
     private Folder folder;

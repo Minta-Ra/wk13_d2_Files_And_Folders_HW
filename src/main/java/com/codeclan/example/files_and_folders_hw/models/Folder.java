@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "names")
+@Table(name = "folders")
 public class Folder {
 
     @Id
@@ -21,11 +21,17 @@ public class Folder {
     // A Folder should have list of files
     private List<File> files;
 
+    @ManyToOne
+    @JsonIgnoreProperties({"folders"})
+    @JoinColumn(name = "user_id", nullable = false)
     // A Folder should have a user
+    private User user;
 
-    public Folder(String title) {
+
+    public Folder(String title, User user) {
         this.title = title;
         this.files = new ArrayList<File>();
+        this.user = user;
     }
 
     public Folder() {
@@ -54,5 +60,17 @@ public class Folder {
 
     public void setFiles(List<File> files) {
         this.files = files;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void addFile(File file) {
+        this.files.add(file);
     }
 }
